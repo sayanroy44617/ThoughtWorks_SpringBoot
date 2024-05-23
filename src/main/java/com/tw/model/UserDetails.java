@@ -1,10 +1,19 @@
 package com.tw.model;
 
-public class User {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
+public class UserDetails {
+
+	@NotNull(message = "FirstName can't be null")
 	private String firstName;
+	@NotNull
 	private String lastName;
+	@Email(message = "Give proper email")
 	private String email;
+	@NotNull
+	@Size(max = 10 , min = 10)
 	private String phnNo;
 
 	public String getFirstName() {
