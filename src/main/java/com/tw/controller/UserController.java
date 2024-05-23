@@ -1,5 +1,11 @@
 package com.tw.controller;
 
+import java.net.http.HttpResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.tw.model.User;
 
 @RestController
 @RequestMapping("/users")
@@ -20,11 +29,17 @@ public class UserController {
 		return "Getting the users  of page no :" + page + " and limit : " + limit + " sort : "+ sort ;
 	}
 	
-	@GetMapping("/{userid}")
-	public String getUser(@PathVariable String userid )
-	{
-		return "Getting the user with id: " + userid;
+	@GetMapping(path = "/{userid}" , produces = {MediaType.APPLICATION_XML_VALUE , MediaType.APPLICATION_JSON_VALUE}  ) 
+	public ResponseEntity<User> getUser(@PathVariable String userid)	{
+		User user1 = new User();
+		user1.setLastName("Sayan");
+		user1.setLastName("Roy");
+		user1.setEmail("sayan44617@gmail.com");
+		user1.setPhnNo("xxx-xxx-xxxx");
+		return new ResponseEntity<User>(user1, HttpStatus.BAD_REQUEST);
 	}
+	
+	
 	
 	@PostMapping
 	public String addUser()
