@@ -1,10 +1,10 @@
-package com.tw.model;
+package com.tw.model.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class UserDetails {
+public class UserDetailsRequest {
 	
 	private String id ;
 

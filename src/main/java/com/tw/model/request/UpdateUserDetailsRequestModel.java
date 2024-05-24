@@ -1,4 +1,4 @@
-package com.tw.model;
+package com.tw.model.request;
 
 import jakarta.validation.constraints.NotNull;
 

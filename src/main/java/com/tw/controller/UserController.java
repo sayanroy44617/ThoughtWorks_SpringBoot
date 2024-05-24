@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tw.model.UpdateUserDetailsRequestModel;
-import com.tw.model.UserDetails;
+import com.tw.exceptions.UserServiceException;
+import com.tw.model.request.UpdateUserDetailsRequestModel;
+import com.tw.model.request.UserDetailsRequest;
+import com.tw.model.response.UserDetails;
 
 import jakarta.validation.Valid;
 
@@ -52,18 +54,23 @@ public class UserController {
 	
 	
 	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<UserDetails> addUser(@Valid  @RequestBody UserDetails userdetails)
+	public ResponseEntity<UserDetails> addUser(@Valid  @RequestBody  UserDetailsRequest userDetailsRequest)
 	{
-		String id = UUID.randomUUID().toString();
-		UserDetails user1 = new UserDetails();
-		user1.setFirstName(userdetails.getFirstName());
-		user1.setLastName(userdetails.getLastName());
-		user1.setEmail(userdetails.getEmail());
-		user1.setPhnNo(userdetails.getPhnNo());
-		user1.setId(id);
-		users.put(id, user1);
+		if(true)
+		{
+			throw new UserServiceException("This is the service exception");
+		}
 		
-		return new ResponseEntity<UserDetails>(user1 , HttpStatus.OK);
+		String id = UUID.randomUUID().toString();
+		UserDetails user = new UserDetails();
+		user.setFirstName(userDetailsRequest.getFirstName());
+		user.setLastName(userDetailsRequest.getLastName());
+		user.setEmail(userDetailsRequest.getEmail());
+		user.setPhnNo(userDetailsRequest.getPhnNo());
+		user.setId(id);
+		users.put(id, user);
+		
+		return new ResponseEntity<UserDetails>(user , HttpStatus.OK);
 		
 	}
 	
@@ -71,6 +78,8 @@ public class UserController {
 	@PutMapping(path="/{userid}" , consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
 	public UserDetails updateUser(@PathVariable String userid , @RequestBody UpdateUserDetailsRequestModel updateUserDetails)
 	{
+		
+		
 		UserDetails user = users.get(userid);
 		user.setFirstName(updateUserDetails.getFirstName());
 		user.setLastName(updateUserDetails.getLastName());
