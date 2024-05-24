@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UserDetails {
+	
+	private String id ;
 
 	@NotNull(message = "FirstName can't be null")
 	private String firstName;
@@ -19,6 +21,20 @@ public class UserDetails {
 	public String getFirstName() {
 		return firstName;
 	}
+	
+	
+
+	public String getId() {
+		return id;
+	}
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
