@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,16 @@ import com.tw.exceptions.UserServiceException;
 import com.tw.model.request.UpdateUserDetailsRequestModel;
 import com.tw.model.request.UserDetailsRequest;
 import com.tw.model.response.UserDetails;
+import com.tw.service.UserService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+	
+	@Autowired
+	UserService userService ;
 	
 	Map<String , UserDetails> users = new HashMap<>();
 
@@ -56,21 +61,8 @@ public class UserController {
 	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<UserDetails> addUser(@Valid  @RequestBody  UserDetailsRequest userDetailsRequest)
 	{
-		if(true)
-		{
-			throw new UserServiceException("This is the service exception");
-		}
-		
-		String id = UUID.randomUUID().toString();
-		UserDetails user = new UserDetails();
-		user.setFirstName(userDetailsRequest.getFirstName());
-		user.setLastName(userDetailsRequest.getLastName());
-		user.setEmail(userDetailsRequest.getEmail());
-		user.setPhnNo(userDetailsRequest.getPhnNo());
-		user.setId(id);
-		users.put(id, user);
-		
-		return new ResponseEntity<UserDetails>(user , HttpStatus.OK);
+		UserDetails returnValue = userService.createUser(userDetailsRequest);
+		return new ResponseEntity<UserDetails>(returnValue , HttpStatus.OK);
 		
 	}
 	
